@@ -41,17 +41,6 @@ class Normal:
         """Calculates the CDF for a given x-value"""
         pi = 3.1415926536
         t = (x - self.mean) / (self.stddev * (2 ** 0.5))
-        if t > 5:
-            erf = 1.0
-        elif t < -5:
-            erf = -1.0
-        else:
-            total = 0
-            term = t
-            n = 0
-            while n < 60:
-                total += term / (2 * n + 1)
-                n += 1
-                term = -term * t * t / n
-            erf = 2 / (pi ** 0.5) * total
+        erf = (2 / (pi ** 0.5)) * (t - (t ** 3) / 3 + (t ** 5) / 10
+                                   - (t ** 7) / 42 + (t ** 9) / 216)
         return 0.5 * (1 + erf)
