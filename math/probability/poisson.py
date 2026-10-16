@@ -6,11 +6,7 @@ class Poisson:
     """Represents a Poisson distribution"""
 
     def __init__(self, data=None, lambtha=1.):
-        """Initialize the distribution
-
-        data: list of data used to estimate the distribution
-        lambtha: expected number of occurrences in a given time frame
-        """
+        """Initialize the distribution"""
         if data is None:
             if lambtha <= 0:
                 raise ValueError("lambtha must be a positive value")
@@ -32,3 +28,13 @@ class Poisson:
         for i in range(1, k + 1):
             factorial *= i
         return (e ** -self.lambtha) * (self.lambtha ** k) / factorial
+
+    def cdf(self, k):
+        """Calculates the CDF for a given number of successes k"""
+        k = int(k)
+        if k < 0:
+            return 0
+        total = 0
+        for i in range(k + 1):
+            total += self.pmf(i)
+        return total
